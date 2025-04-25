@@ -7,11 +7,15 @@ const createUser = async (req, res = response) => {
     const { name, email, password } = req.body;
 
     try {
-        const user = new User({ name, email, password });
+        let user = await User.findOne({ email });
+        if (user) return res.status(400).json({ "msg":"User already exists with this email" });
+
+        user = new User({ name, email, password });
         await user.save();
 
         res.status(200).json({
-            "msg":"User created",
+            uid: user.id,
+            name: user.name,
         });
     } catch (error) {
         res.status(400).json({
