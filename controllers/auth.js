@@ -24,18 +24,36 @@ const createUser = async (req, res = response) => {
             name: user.name,
         });
     } catch (error) {
-        res.status(400).json({
+        res.status(500).json({
             ok: false,
-            msg: "Error creating user",
+            msg: "unexpect error, contact support",
         });
     }
 }
 
-const loginUser = (req, res) => {
-    res.json({
-        message: "Login user",
-        status: 200
-    });
+const loginUser = async (req, res) => {
+
+    try{
+        const { email, password } = req.body;
+        const user = await User.findOne({ email });
+        if (!user) return res.status(400).json({ "msg":"User does not exist with this email" });
+
+        const validPassword = bcrypt.compareSync(password, user.password);
+        if (!validPassword) return res.status(400).json({ "msg":"Invalid password" });
+
+        res.status(200).json({
+            ok: true,
+            uid: user.id,
+            name: user.name,
+            login: true,
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            ok: false,
+            msg: "unexpect error, contact support",
+        });
+    }
 }
 
 const renewToken = (req, res) => {
