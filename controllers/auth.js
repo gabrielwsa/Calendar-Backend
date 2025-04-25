@@ -32,7 +32,7 @@ const createUser = async (req, res = response) => {
     }
 }
 
-const loginUser = async (req, res) => {
+const loginUser = async (req, res = response) => {
 
     try{
         const { email, password } = req.body;
@@ -59,10 +59,14 @@ const loginUser = async (req, res) => {
     }
 }
 
-const renewToken = (req, res) => {
-    res.json({
-        message: "Renew token",
-        status: 200
+const renewToken = async (req, res = response) => {
+
+    const { uid, name } = req;
+    const token = await generateJWT(uid, name);
+
+    res.status(200).json({
+        ok: true,
+        token
     });
 }
 
