@@ -1,8 +1,13 @@
 const express = require("express");
 const dotenv = require("dotenv");
+const { dbConnection } = require("./database/config");
+dotenv.config();
 
 //* CREAR SERVIDOR EXPRESS
 const app = express();
+
+//* Conectar a la base de datos
+dbConnection();
 
 //* ROUTE PUBLIC
 app.use(express.static("public"));
