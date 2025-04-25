@@ -2,6 +2,7 @@ const { response } = require('express');
 const { validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const User = require('../models/User');
+const { generateJWT } = require('../helpers/jwt');
 
 const createUser = async (req, res = response) => {
 
@@ -41,11 +42,13 @@ const loginUser = async (req, res) => {
         const validPassword = bcrypt.compareSync(password, user.password);
         if (!validPassword) return res.status(400).json({ "msg":"Invalid password" });
 
+        const token = await generateJWT(user.id, user.name);
+
         res.status(200).json({
             ok: true,
             uid: user.id,
             name: user.name,
-            login: true,
+            token
         });
 
     } catch (error) {
