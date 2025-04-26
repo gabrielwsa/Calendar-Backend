@@ -27,6 +27,6 @@ app.use('/api/auth', require('./routes/auth'));
 //* crud: eventos
 app.use('/api/events', require('./routes/events'));
 
-app.listen(5890, () => {
-    console.log(`App running on port ${5890}`);
+app.listen(process.env.PORT, () => {
+    console.log(`App running on port ${process.env.PORT}`);
 })
