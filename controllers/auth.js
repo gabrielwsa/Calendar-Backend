@@ -18,11 +18,13 @@ const createUser = async (req, res = response) => {
             password: bcrypt.hashSync(password, 10) 
         });
         await user.save();
+        const token = await generateJWT(user.id, user.name);
 
         res.status(200).json({
             ok: true,
             uid: user.id,
             name: user.name,
+            token
         });
     } catch (error) {
         res.status(500).json({
