@@ -22,10 +22,18 @@ router.post('/',[
     validateJWT
 ], createEvent);
 
-//* Update event
+/**
+ * Rota de atualização de eventos (incluindo notas)
+ * O middleware validateJWT garante que apenas usuários autenticados acessem esta rota
+ * Dentro do controlador updateEvent existe a verificação que bloqueia edição por outros usuários
+ * Esta é a rota chamada quando um usuário tenta editar notas de um evento
+ */
 router.put('/:id',[validateJWT], updateEvent);
 
-//* Delete event
+/**
+ * Rota para excluir eventos
+ * Similar à rota de atualização, também verifica propriedade do evento no controlador
+ */
 router.delete('/:id',[validateJWT], deleteEvent);
 
 module.exports = router;
