@@ -13,7 +13,7 @@ dbConnection();
 
 //* CORS - configuracao basica seria somente agregar ele a todas as rotas
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: '*',
 }));
 
 //* ROUTE PUBLIC
