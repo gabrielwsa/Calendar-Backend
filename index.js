@@ -12,9 +12,7 @@ const app = express();
 dbConnection();
 
 //* CORS - configuracao basica seria somente agregar ele a todas as rotas
-app.use(cors({
-    origin: '*',
-}));
+app.use(cors());
 
 //* ROUTE PUBLIC
 app.use(express.static("public"));
